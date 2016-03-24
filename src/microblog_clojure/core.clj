@@ -3,7 +3,8 @@
             [ring.middleware.params :as p]
             [ring.util.response :as r]
             [compojure.core :as c]
-            [hiccup.core :as h])
+            [hiccup.core :as h]
+            [hiccup.util :as hu])
   (:gen-class))
 
 (defonce messages (atom []))
@@ -22,7 +23,7 @@
                [:button {:type "submit"} "Add Message"]]
               [:ul
                (map (fn [message]
-                      [:li message])
+                      [:li (hu/escape-html message)])
                  @messages)]]]))
   
   (c/POST "/add-message" request
